@@ -2,6 +2,7 @@
 
 > [!IMPORTANT]
 > This project is still a work in progress hence expect issues & bugs.
+> This project uses [MinecraftBedrockArchiver's GDKLinks](https://github.com/MinecraftBedrockArchiver/GdkLinks) repository for version metadata.
 
 Easily switch between different GDK versions of Minecraft: Bedrock Edition.
 
