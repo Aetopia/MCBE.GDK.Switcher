@@ -17,7 +17,7 @@ Easily switch between different GDK versions of Minecraft: Bedrock Edition.
 
 ## Usage
 
-- From the latest release, download the file called [`MCBE.GDK.Switcher`](https://github.com/Aetopia/MCBE.GDK.Switcher/releases/latest/download/MCBE.GDK.Switcher.exe)
+- From the latest release, download the file called [`MCBE.GDK.Switcher`](https://github.com/Aetopia/MCBE.GDK.Switcher/releases/latest/download/MCBE.GDK.Switcher.exe).
 
 - Run the program, select your desired version & click on the download button. 
 
