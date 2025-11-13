@@ -1,9 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net481</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+
+    <Optimize>true</Optimize>
+    <PublishRelease>true</PublishRelease>
 
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
