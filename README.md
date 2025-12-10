@@ -1,21 +1,16 @@
 # MCBE GDK Switcher 
 
-> [!IMPORTANT]
-> - This project is still a work in progress hence expect issues & bugs.
->
-> - This project uses [MinecraftBedrockArchiver's GDKLinks repository](https://github.com/MinecraftBedrockArchiver/GdkLinks) for version metadata.
-
 Easily switch between different GDK versions of Minecraft: Bedrock Edition.
 
 ## Features
 
 - Install any GDK version of Minecraft: Bedrock Edition.
 
-- Automatically stop forced auto-updates to prevent unattended updates.
-    
-    - This done by replacing the stock PC Bootstrapper with our own.
-    
-    - The Bootstrapper replacement that ships with MCBE GDK Switcher can be [viewed here](src/MCBE.GDK.Bootstrapper/README.md).
+- Automatically stop forced auto-updates when playing a downgraded version.
+
+> [!IMPORTANT]
+> Auto-update suppression is achieved by using [Pyroclastic](https://github.com/Aetopia/Pyroclastic).
+> - Pyroclastic bypasses the [PC Bootstrapper provided by Gaming Runtime Services.](https://learn.microsoft.com/gaming/gdk/docs/gdk-dev/pc-dev/overviews/gr-pc-bootstrapper)
 
 ## Usage
 
@@ -24,21 +19,9 @@ Easily switch between different GDK versions of Minecraft: Bedrock Edition.
 - Run the program, select your desired version & click on the download button. 
 
 ## Build
-1. Install & update:
+1. Install [.NET](https://dotnet.microsoft.com/download).
+2. Run: 
     
-    - [.NET](https://dotnet.microsoft.com/download)
-
-
-    - [MSYS2](https://www.msys2.org)
-
-        ```bash
-        pacman -Syu --noconfirm
-        ```
-
-3. Install [GCC](https://gcc.gnu.org) & [MinHook](https://github.com/TsudaKageyu/minhook) via MSYS2:
-
-    ```bash
-    pacman -Syu mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-MinHook --noconfirm
     ```
-
-3. Start MSYS2's `UCRT64` environment & run `dotnet publish`.
+    dotnet publish "src/MCBE.GDK.Switcher.csproj"
+    ```

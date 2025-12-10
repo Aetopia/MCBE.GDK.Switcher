@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 sealed class Form : System.Windows.Forms.Form
@@ -75,77 +76,39 @@ sealed class Form : System.Windows.Forms.Form
         };
         tableLayoutPanel2.Controls.Add(progressBar1, 0, 0);
 
-        Button button2 = new()
-        {
-            Dock = DockStyle.Fill,
-            Text = "✖",
-            AutoSize = true,
-            AutoSizeMode = AutoSizeMode.GrowAndShrink,
-            Visible = false,
-            Enabled = false
-        };
-
         tableLayoutPanel2.ColumnStyles.Add(new() { SizeType = SizeType.AutoSize });
-        tableLayoutPanel2.Controls.Add(button2, 1, 0);
 
-        Catalog.Request? request = null;
+        Task? task = null;
 
-        Closing += (sender, args) =>
-        {
-            if (request is { })
-            {
-                if (button2.Enabled) button2.PerformClick();
-                args.Cancel = true;
-            }
-        };
+        Closing += (sender, args) => args.Cancel = !task?.IsCompleted ?? false;
 
         button1.Click += async delegate
         {
             tabControl.Enabled = false;
             button1.Visible = false;
-
-            button2.Visible = true;
-            button2.Enabled = false;
             progressBar1.Visible = true;
-
 
             var tabPage = tabControl.SelectedTab;
             var listBox = (ListBox)tabPage.Controls[0];
             var versions = (Catalog.Versions)tabPage.Tag;
 
-            request = await versions.GetAsync((string)listBox.SelectedItem, (_) => Invoke(() =>
+            await (task = versions.InstallAsync((string)listBox.SelectedItem, (_) => Invoke(() =>
             {
                 if (progressBar1.Value != _)
                 {
                     progressBar1.Style = ProgressBarStyle.Blocks;
                     progressBar1.Value = _;
                 }
-            }));
-
-            if (request is { })
-            {
-                button2.Enabled = true;
-                await request;
-            }
-            request = null;
+            }))); task = null;
 
             tabControl.Enabled = true;
             button1.Visible = true;
-
-            button2.Visible = false;
-            button2.Enabled = false;
 
             progressBar1.Style = ProgressBarStyle.Marquee;
             progressBar1.Visible = false;
         };
 
-        button2.Click += delegate
-        {
-            button2.Enabled = false;
-            request?.Cancel();
-        };
-
-        Shown += async delegate
+        Shown += async (_, _) =>
         {
             SuspendLayout();
 
@@ -154,14 +117,14 @@ sealed class Form : System.Windows.Forms.Form
             tabPage1.Tag = catalog.Release;
             tabPage2.Tag = catalog.Preview;
 
-            foreach (var key in catalog.Release.Keys.Reverse())
+            foreach (var key in catalog.Release.Reverse())
             {
                 listBox1.Items.Add(key);
                 Application.DoEvents();
             }
             listBox1.SelectedIndex = 0;
 
-            foreach (var key in catalog.Preview.Keys.Reverse())
+            foreach (var key in catalog.Preview.Reverse())
             {
                 listBox2.Items.Add(key);
                 Application.DoEvents();
